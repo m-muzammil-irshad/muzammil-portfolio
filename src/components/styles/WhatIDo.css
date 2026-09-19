@@ -395,6 +395,67 @@
     margin: 0;
   }
 }
+
+@media only screen and (max-width: 900px) {
+  .what-box-in {
+    display: flex;
+    height: auto;
+    margin-left: 0;
+    gap: 16px;
+    overflow: visible;
+  }
+
+  .what-content,
+  .what-noTouch:hover,
+  .what-content-active,
+  .what-content.what-sibling {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    flex: none;
+    padding: 24px;
+  }
+
+  .what-content-in,
+  .what-box-in:hover .what-content-in,
+  .what-box-in:hover .what-noTouch:hover .what-content-in,
+  .what-box-in .what-content-active .what-content-in {
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+    opacity: 1;
+    animation: none;
+  }
+
+  .what-content h3 {
+    font-size: clamp(20px, 6vw, 25px);
+    line-height: 1.15;
+  }
+
+  .what-content h4 {
+    line-height: 1.35;
+  }
+
+  .what-content p {
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 18px;
+  }
+
+  .what-content h5,
+  .what-content-flex,
+  .what-noTouch:hover h5,
+  .what-content-active h5,
+  .what-noTouch:hover .what-content-flex,
+  .what-content-active .what-content-flex {
+    opacity: 1;
+  }
+
+  .what-border1,
+  .what-border2 {
+    pointer-events: none;
+  }
+}
 @media only screen and (min-width: 1950px) {
   .what-box h2 {
     font-size: 7rem;

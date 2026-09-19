@@ -9,7 +9,7 @@ export default function handleResize(
   character: THREE.Object3D
 ) {
   if (!canvasDiv.current) return;
-  let canvas3d = canvasDiv.current.getBoundingClientRect();
+  const canvas3d = canvasDiv.current.getBoundingClientRect();
   const width = canvas3d.width;
   const height = canvas3d.height;
   renderer.setSize(width, height);
@@ -17,7 +17,7 @@ export default function handleResize(
   camera.updateProjectionMatrix();
   const workTrigger = ScrollTrigger.getById("work");
   ScrollTrigger.getAll().forEach((trigger) => {
-    if (trigger != workTrigger) {
+    if (trigger !== workTrigger) {
       trigger.kill();
     }
   });

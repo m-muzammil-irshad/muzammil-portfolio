@@ -1,14 +1,16 @@
 import * as THREE from "three";
 import gsap from "gsap";
 
+type MaterialMesh = THREE.Mesh<
+  THREE.BufferGeometry,
+  THREE.MeshStandardMaterial
+>;
+
 export function setCharTimeline(
   character: THREE.Object3D<THREE.Object3DEventMap> | null,
   camera: THREE.PerspectiveCamera
 ) {
-  let intensity: number = 0;
-  setInterval(() => {
-    intensity = Math.random();
-  }, 200);
+  const intensity = () => Math.random();
   const tl1 = gsap.timeline({
     scrollTrigger: {
       trigger: ".landing-section",
@@ -36,33 +38,47 @@ export function setCharTimeline(
       invalidateOnRefresh: true,
     },
   });
-  let screenLight: any, monitor: any;
-  character?.children.forEach((object: any) => {
+  let screenLight: MaterialMesh | undefined;
+  let monitor: MaterialMesh | undefined;
+  character?.children.forEach((object) => {
     if (object.name === "Plane004") {
-      object.children.forEach((child: any) => {
-        child.material.transparent = true;
-        child.material.opacity = 0;
-        if (child.material.name === "Material.018") {
-          monitor = child;
-          child.material.color.set("#FFFFFF");
+      object.children.forEach((child) => {
+        const material =
+          child instanceof THREE.Mesh &&
+          child.material instanceof THREE.MeshStandardMaterial
+            ? child.material
+            : null;
+        if (!material) return;
+        material.transparent = true;
+        material.opacity = 0;
+        if (material.name === "Material.018") {
+          monitor = child as MaterialMesh;
+          material.color.set("#FFFFFF");
         }
       });
     }
     if (object.name === "screenlight") {
-      object.material.transparent = true;
-      object.material.opacity = 0;
-      object.material.emissive.set("#B0F5EA");
-      gsap.timeline({ repeat: -1, repeatRefresh: true }).to(object.material, {
-        emissiveIntensity: () => intensity * 8,
+      const material =
+        object instanceof THREE.Mesh &&
+        object.material instanceof THREE.MeshStandardMaterial
+          ? object.material
+          : null;
+      if (!material) return;
+      material.transparent = true;
+      material.opacity = 0;
+      material.emissive.set("#B0F5EA");
+      gsap.killTweensOf(material);
+      gsap.timeline({ repeat: -1, repeatRefresh: true }).to(material, {
+        emissiveIntensity: () => intensity() * 8,
         duration: () => Math.random() * 0.6,
         delay: () => Math.random() * 0.1,
       });
-      screenLight = object;
+      screenLight = object as MaterialMesh;
     }
   });
-  let neckBone = character?.getObjectByName("spine005");
+  const neckBone = character?.getObjectByName("spine005");
+  if (!character || !neckBone || !monitor || !screenLight) return;
   if (window.innerWidth > 1024) {
-    if (character) {
       tl1
         .fromTo(character.rotation, { y: 0 }, { y: 0.7, duration: 1 }, 0)
         .to(camera.position, { z: 22 }, 0)
@@ -86,7 +102,7 @@ export function setCharTimeline(
           0
         )
         .to(character.rotation, { y: 0.92, x: 0.12, delay: 3, duration: 3 }, 0)
-        .to(neckBone!.rotation, { x: 0.6, delay: 2, duration: 3 }, 0)
+        .to(neckBone.rotation, { x: 0.6, delay: 2, duration: 3 }, 0)
         .to(monitor.material, { opacity: 1, duration: 0.8, delay: 3.2 }, 0)
         .to(screenLight.material, { opacity: 1, duration: 0.8, delay: 4.5 }, 0)
         .fromTo(
@@ -117,18 +133,15 @@ export function setCharTimeline(
         )
         .fromTo(".whatIDO", { y: 0 }, { y: "15%", duration: 2 }, 0)
         .to(character.rotation, { x: -0.04, duration: 2, delay: 1 }, 0);
-    }
   } else {
-    if (character) {
-      const tM2 = gsap.timeline({
-        scrollTrigger: {
-          trigger: ".what-box-in",
-          start: "top 70%",
-          end: "bottom top",
-        },
-      });
-      tM2.to(".what-box-in", { display: "flex", duration: 0.1, delay: 0 }, 0);
-    }
+    const tM2 = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".what-box-in",
+        start: "top 70%",
+        end: "bottom top",
+      },
+    });
+    tM2.to(".what-box-in", { display: "flex", duration: 0.1, delay: 0 }, 0);
   }
 }
 

@@ -6,10 +6,14 @@ import { ScrollSmoother } from "gsap/ScrollSmoother";
 import "./styles/Navbar.css";
 
 gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
-export let smoother: ScrollSmoother;
+export let smoother: ScrollSmoother | null = null;
 
 const Navbar = () => {
   useEffect(() => {
+    if (window.innerWidth <= 1024) {
+      return;
+    }
+
     smoother = ScrollSmoother.create({
       wrapper: "#smooth-wrapper",
       content: "#smooth-content",
@@ -23,21 +27,37 @@ const Navbar = () => {
     smoother.scrollTop(0);
     smoother.paused(true);
 
-    let links = document.querySelectorAll(".header ul a");
+    const links = document.querySelectorAll(".header ul a");
+    const linkHandlers: Array<{
+      element: HTMLAnchorElement;
+      handler: (event: Event) => void;
+    }> = [];
     links.forEach((elem) => {
-      let element = elem as HTMLAnchorElement;
-      element.addEventListener("click", (e) => {
+      const element = elem as HTMLAnchorElement;
+      const handler = (e: Event) => {
         if (window.innerWidth > 1024) {
           e.preventDefault();
-          let elem = e.currentTarget as HTMLAnchorElement;
-          let section = elem.getAttribute("data-href");
-          smoother.scrollTo(section, true, "top top");
+          const target = e.currentTarget as HTMLAnchorElement;
+          const section = target.getAttribute("data-href");
+          smoother?.scrollTo(section, true, "top top");
         }
-      });
+      };
+      element.addEventListener("click", handler);
+      linkHandlers.push({ element, handler });
     });
-    window.addEventListener("resize", () => {
+    const onResize = () => {
       ScrollSmoother.refresh(true);
-    });
+    };
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      linkHandlers.forEach(({ element, handler }) => {
+        element.removeEventListener("click", handler);
+      });
+      window.removeEventListener("resize", onResize);
+      smoother?.kill();
+      smoother = null;
+    };
   }, []);
   return (
     <>

@@ -115,34 +115,55 @@ function Pointer({ vec = new THREE.Vector3(), isActive }: PointerProps) {
 
 const TechStack = () => {
   const [isActive, setIsActive] = useState(false);
+  const isMobile = window.innerWidth <= 1024;
 
   useEffect(() => {
     const handleScroll = () => {
+      const workElement = document.getElementById("work");
+      if (!workElement) return;
       const scrollY = window.scrollY || document.documentElement.scrollTop;
-      const threshold = document
-        .getElementById("work")!
-        .getBoundingClientRect().top;
+      const threshold = workElement.getBoundingClientRect().top;
       setIsActive(scrollY > threshold);
     };
+    const linkHandlers: Array<{
+      element: HTMLAnchorElement;
+      handler: () => void;
+    }> = [];
+    const activeTimers = new Set<number>();
     document.querySelectorAll(".header a").forEach((elem) => {
       const element = elem as HTMLAnchorElement;
-      element.addEventListener("click", () => {
-        const interval = setInterval(() => {
+      const handler = () => {
+        const interval = window.setInterval(() => {
           handleScroll();
         }, 10);
-        setTimeout(() => {
-          clearInterval(interval);
+        activeTimers.add(interval);
+        const timeout = window.setTimeout(() => {
+          window.clearInterval(interval);
+          activeTimers.delete(interval);
+          activeTimers.delete(timeout);
         }, 1000);
-      });
+        activeTimers.add(timeout);
+      };
+      element.addEventListener("click", handler);
+      linkHandlers.push({ element, handler });
     });
     window.addEventListener("scroll", handleScroll);
+    handleScroll();
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      linkHandlers.forEach(({ element, handler }) => {
+        element.removeEventListener("click", handler);
+      });
+      activeTimers.forEach((timer) => {
+        window.clearInterval(timer);
+        window.clearTimeout(timer);
+      });
+      activeTimers.clear();
     };
   }, []);
   const spheres = useMemo(
     () =>
-      Array.from({ length: Math.max(1, imageUrls.length) }, () => ({
+      Array.from({ length: imageUrls.length }, () => ({
         scale: sphereScales[Math.floor(Math.random() * sphereScales.length)],
       })),
     []
@@ -150,18 +171,29 @@ const TechStack = () => {
 
   const materials = useMemo(() => {
     return imageUrls.map(
-      (url) =>
-        new THREE.MeshPhysicalMaterial({
-          map: textureLoader.load(url),
+      (url) => {
+        const texture = textureLoader.load(url);
+        return new THREE.MeshPhysicalMaterial({
+          map: texture,
           emissive: "#ffffff",
-          emissiveMap: textureLoader.load(url),
+          emissiveMap: texture,
           emissiveIntensity: 0.3,
           metalness: 0.5,
           roughness: 1,
           clearcoat: 0.1,
-        })
+        });
+      }
     );
   }, []);
+
+  useEffect(() => {
+    return () => {
+      materials.forEach((material) => {
+        material.map?.dispose();
+        material.dispose();
+      });
+    };
+  }, [materials]);
 
   return (
     <div className="techstack">
@@ -170,6 +202,7 @@ const TechStack = () => {
       <Canvas
         shadows
         gl={{ alpha: true, stencil: false, depth: false, antialias: false }}
+        dpr={isMobile ? 1 : [1, 2]}
         camera={{ position: [0, 0, 20], fov: 32.5, near: 1, far: 100 }}
         onCreated={(state) => (state.gl.toneMappingExposure = 1.5)}
         className="tech-canvas"
@@ -190,7 +223,7 @@ const TechStack = () => {
             <SphereGeo
               key={i}
               {...props}
-              material={materials[i % materials.length] || materials[0]}
+              material={materials[i]}
               isActive={isActive}
             />
           ))}

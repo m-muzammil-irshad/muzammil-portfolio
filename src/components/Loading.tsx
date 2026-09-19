@@ -9,21 +9,33 @@ const Loading = ({ percent }: { percent: number }) => {
   const [loaded, setLoaded] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [clicked, setClicked] = useState(false);
-
-  if (percent >= 100) {
-    setTimeout(() => {
-      setLoaded(true);
-      setTimeout(() => {
-        setIsLoaded(true);
-      }, 1000);
-    }, 600);
-  }
+  const isComplete = percent >= 100;
 
   useEffect(() => {
+    if (!isComplete) return;
+
+    const loadedTimer = window.setTimeout(() => {
+      setLoaded(true);
+    }, 600);
+    const completeTimer = window.setTimeout(() => {
+      setIsLoaded(true);
+    }, 1600);
+
+    return () => {
+      window.clearTimeout(loadedTimer);
+      window.clearTimeout(completeTimer);
+    };
+  }, [isComplete]);
+
+  useEffect(() => {
+    let cancelled = false;
+    let finishTimer: number | undefined;
+
     import("./utils/initialFX").then((module) => {
-      if (isLoaded) {
+      if (isLoaded && !cancelled) {
         setClicked(true);
-        setTimeout(() => {
+        finishTimer = window.setTimeout(() => {
+          if (cancelled) return;
           if (module.initialFX) {
             module.initialFX();
           }
@@ -31,7 +43,12 @@ const Loading = ({ percent }: { percent: number }) => {
         }, 900);
       }
     });
-  }, [isLoaded]);
+
+    return () => {
+      cancelled = true;
+      if (finishTimer) window.clearTimeout(finishTimer);
+    };
+  }, [isLoaded, setIsLoading]);
 
   function handleMouseMove(e: React.MouseEvent<HTMLElement>) {
     const { currentTarget: target } = e;
@@ -97,7 +114,7 @@ export const setProgress = (setLoading: (value: number) => void) => {
 
   let interval = setInterval(() => {
     if (percent <= 50) {
-      let rand = Math.round(Math.random() * 5);
+      const rand = Math.round(Math.random() * 5);
       percent = percent + rand;
       setLoading(percent);
     } else {
