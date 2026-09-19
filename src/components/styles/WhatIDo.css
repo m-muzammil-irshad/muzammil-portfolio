@@ -159,6 +159,7 @@
   width: 25px;
   height: 25px;
   border: 1px solid #fff;
+  cursor: pointer;
 }
 .what-arrow::before {
   content: "";
@@ -407,24 +408,44 @@
 
   .what-content,
   .what-noTouch:hover,
-  .what-content-active,
   .what-content.what-sibling {
     width: 100%;
-    height: auto;
-    min-height: 0;
+    height: 94px;
+    min-height: 94px;
     flex: none;
+    padding: 24px;
+    overflow: hidden;
+  }
+
+  .what-content.what-content-active {
+    height: auto;
+    min-height: 250px;
     padding: 24px;
   }
 
   .what-content-in,
   .what-box-in:hover .what-content-in,
-  .what-box-in:hover .what-noTouch:hover .what-content-in,
-  .what-box-in .what-content-active .what-content-in {
+  .what-box-in:hover .what-noTouch:hover .what-content-in {
     height: auto;
     min-height: 0;
-    overflow: visible;
     opacity: 1;
     animation: none;
+  }
+
+  .what-content p,
+  .what-content h5,
+  .what-content-flex {
+    display: none;
+  }
+
+  .what-content.what-content-active p,
+  .what-content.what-content-active h5,
+  .what-content.what-content-active .what-content-flex {
+    display: block;
+  }
+
+  .what-content.what-content-active .what-content-flex {
+    display: flex;
   }
 
   .what-content h3 {
@@ -440,15 +461,6 @@
     font-size: 13px;
     line-height: 1.5;
     margin-bottom: 18px;
-  }
-
-  .what-content h5,
-  .what-content-flex,
-  .what-noTouch:hover h5,
-  .what-content-active h5,
-  .what-noTouch:hover .what-content-flex,
-  .what-content-active .what-content-flex {
-    opacity: 1;
   }
 
   .what-border1,

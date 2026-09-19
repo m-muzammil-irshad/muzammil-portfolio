@@ -18,7 +18,7 @@ const Career = () => {
                 <h4>Research Assistant</h4>
                 <h5>Research in AI for Science and Engineering (RAISE) Lab</h5>
               </div>
-              <h3>NOW</h3>
+              <h3>ONGOING</h3>
             </div>
             <p>
               1.5+ years working on machine learning research — incremental

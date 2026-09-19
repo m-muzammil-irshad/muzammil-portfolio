@@ -115,7 +115,15 @@ function Pointer({ vec = new THREE.Vector3(), isActive }: PointerProps) {
 
 const TechStack = () => {
   const [isActive, setIsActive] = useState(false);
-  const isMobile = window.innerWidth <= 1024;
+  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+  const isMobile = viewportWidth <= 1024;
+  const ballSize = Math.min(1, Math.max(0.55, viewportWidth / 1200));
+
+  useEffect(() => {
+    const handleResize = () => setViewportWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -164,9 +172,11 @@ const TechStack = () => {
   const spheres = useMemo(
     () =>
       Array.from({ length: imageUrls.length }, () => ({
-        scale: sphereScales[Math.floor(Math.random() * sphereScales.length)],
+        scale:
+          sphereScales[Math.floor(Math.random() * sphereScales.length)] *
+          ballSize,
       })),
-    []
+    [ballSize]
   );
 
   const materials = useMemo(() => {

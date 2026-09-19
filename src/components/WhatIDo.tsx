@@ -4,7 +4,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const WhatIDo = () => {
   const containerRef = useRef<(HTMLDivElement | null)[]>([]);
-  const clickHandlersRef = useRef(new Map<HTMLDivElement, () => void>());
+  const clickHandlersRef = useRef(
+    new Map<HTMLDivElement, (event: MouseEvent) => void>()
+  );
   const setRef = (el: HTMLDivElement | null, index: number) => {
     containerRef.current[index] = el;
   };
@@ -15,7 +17,12 @@ const WhatIDo = () => {
       containers.forEach((container) => {
         if (container) {
           container.classList.remove("what-noTouch");
-          const handler = () => handleClick(container);
+          const handler = (event: MouseEvent) => {
+            const target = event.target as HTMLElement;
+            if (target.closest(".what-arrow")) {
+              handleClick(container);
+            }
+          };
           container.addEventListener("click", handler);
           clickHandlers.set(container, handler);
         }
