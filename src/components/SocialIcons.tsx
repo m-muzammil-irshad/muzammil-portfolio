@@ -1,9 +1,10 @@
 import {
   FaGithub,
-  FaInstagram,
   FaLinkedinIn,
   FaYoutube,
+  FaWhatsapp,
 } from "react-icons/fa6";
+import { SiHuggingface } from "react-icons/si";
 import "./styles/SocialIcons.css";
 import { TbNotes } from "react-icons/tb";
 import { useEffect } from "react";
@@ -61,7 +62,7 @@ const SocialIcons = () => {
       <div className="social-icons" data-cursor="icons" id="social">
         <span>
           <a
-            href="https://github.com/akashrmalhotra"
+            href="https://github.com/m-muzammil-irshad?tab=repositories"
             target="_blank"
             rel="noreferrer"
           >
@@ -70,7 +71,7 @@ const SocialIcons = () => {
         </span>
         <span>
           <a
-            href="https://www.linkedin.com/in/akashrmalhotra/"
+            href="https://www.linkedin.com/in/muhammad-muzammil-irshad-05b863333/"
             target="_blank"
             rel="noreferrer"
           >
@@ -79,7 +80,16 @@ const SocialIcons = () => {
         </span>
         <span>
           <a
-            href="https://www.youtube.com/@Leftbraincoder"
+            href="https://huggingface.co/mmuzammilirshad/spaces"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <SiHuggingface />
+          </a>
+        </span>
+        <span>
+          <a
+            href="https://youtube.com/@autoaiacademy?si=d9ABTXFdhr4ee1eN"
             target="_blank"
             rel="noreferrer"
           >
@@ -88,11 +98,11 @@ const SocialIcons = () => {
         </span>
         <span>
           <a
-            href="https://www.instagram.com/leftbraincoder/"
+            href="https://wa.me/923292540897"
             target="_blank"
             rel="noreferrer"
           >
-            <FaInstagram />
+            <FaWhatsapp />
           </a>
         </span>
       </div>

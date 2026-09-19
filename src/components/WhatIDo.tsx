@@ -87,20 +87,21 @@ const WhatIDo = () => {
             <div className="what-corner"></div>
 
             <div className="what-content-in">
-              <h3>AI & AUTOMATION</h3>
-              <h4>Workflow Intelligence for Organizations</h4>
+              <h3>RESEARCH</h3>
+              <h4>Machine Learning for Real-World Robustness &amp; Safety</h4>
               <p>
-                AI specialist helping organizations automate workflows—internal ops
-                and customer-facing—so teams ship faster with less manual work.
+                I research how machine learning systems handle real-world
+                complexity—from incremental learning for insider threat detection
+                under concept drift, to deep learning models that distinguish
+                genuinely harmful cyberbullying from non-harmful teasing.
               </p>
               <h5>Skillset & tools</h5>
               <div className="what-content-flex">
-                <div className="what-tags">LLMs &amp; agents</div>
-                <div className="what-tags">Workflow design</div>
-                <div className="what-tags">RAG &amp; retrieval</div>
-                <div className="what-tags">Evals &amp; guardrails</div>
-                <div className="what-tags">Integrations</div>
-                <div className="what-tags">Product strategy</div>
+                <div className="what-tags">Concept drift</div>
+                <div className="what-tags">Incremental learning</div>
+                <div className="what-tags">Insider threat detection</div>
+                <div className="what-tags">Cyberbullying detection</div>
+                <div className="what-tags">Deep learning</div>
               </div>
               <div className="what-arrow"></div>
             </div>
@@ -124,21 +125,56 @@ const WhatIDo = () => {
             </div>
             <div className="what-corner"></div>
             <div className="what-content-in">
-              <h3>BUILD &amp; SCALE</h3>
-              <h4>Shipping AI in Production</h4>
+              <h3>AI AGENTS &amp; AUTOMATION</h3>
+              <h4>Turning Manual Workflows into Automated Systems</h4>
               <p>
-                I build the systems behind it: APIs, data, voice/real-time, and
-                full-stack products—production-ready, not slide decks.
+                I build AI agents and automation pipelines that connect tools,
+                data, and workflows—reducing manual effort and letting systems run
+                with minimal human intervention—using n8n and LangChain.
               </p>
               <h5>Skillset & tools</h5>
               <div className="what-content-flex">
-                <div className="what-tags">Node.js</div>
+                <div className="what-tags">n8n</div>
+                <div className="what-tags">LangChain</div>
+                <div className="what-tags">RAG &amp; retrieval</div>
+                <div className="what-tags">WhatsApp automation</div>
+                <div className="what-tags">Workflow design</div>
+                <div className="what-tags">Integrations</div>
+              </div>
+              <div className="what-arrow"></div>
+            </div>
+          </div>
+          <div
+            className="what-content what-noTouch"
+            ref={(el) => setRef(el, 2)}
+          >
+            <div className="what-border1">
+              <svg height="100%">
+                <line
+                  x1="0"
+                  y1="100%"
+                  x2="100%"
+                  y2="100%"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeDasharray="6,6"
+                />
+              </svg>
+            </div>
+            <div className="what-corner"></div>
+            <div className="what-content-in">
+              <h3>INSTRUCTOR</h3>
+              <h4>Teaching Python &amp; Machine Learning</h4>
+              <p>
+                I teach Python and data analysis through YouTube tutorials,
+                breaking down programming and ML concepts into practical,
+                hands-on lessons.
+              </p>
+              <h5>Skillset & tools</h5>
+              <div className="what-content-flex">
                 <div className="what-tags">Python</div>
-                <div className="what-tags">REST &amp; real-time APIs</div>
-                <div className="what-tags">PostgreSQL</div>
-                <div className="what-tags">MongoDB</div>
-                <div className="what-tags">React</div>
-                <div className="what-tags">Cloud &amp; infra</div>
+                <div className="what-tags">Data Analysis</div>
+                <div className="what-tags">Machine Learning</div>
               </div>
               <div className="what-arrow"></div>
             </div>

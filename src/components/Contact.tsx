@@ -1,4 +1,4 @@
-import { MdArrowOutward, MdCopyright } from "react-icons/md";
+import { MdArrowOutward } from "react-icons/md";
 import "./styles/Contact.css";
 
 const Contact = () => {
@@ -11,27 +11,21 @@ const Contact = () => {
             <h4>Connect</h4>
             <p>
               <a
-                href="https://www.linkedin.com/in/akashrmalhotra/"
-                target="_blank"
-                rel="noreferrer"
+                href="mailto:muzammilirshad261@gmail.com"
                 data-cursor="disable"
               >
-                LinkedIn — akashrmalhotra
+                muzammilirshad261@gmail.com
               </a>
             </p>
             <h4>Education</h4>
             <p>
-              PGPWE (MBA), Indian Institute of Management, Lucknow — 2021–2023
-            </p>
-            <p>
-              B.Tech Computer Science, Manav Rachna Educational Institutions —
-              2009–2013
+              BS Computer Science, University of Education, Lahore — Vehari Campus (Ongoing)
             </p>
           </div>
           <div className="contact-box">
             <h4>Social</h4>
             <a
-              href="https://github.com/akashrmalhotra"
+              href="https://github.com/m-muzammil-irshad?tab=repositories"
               target="_blank"
               rel="noreferrer"
               data-cursor="disable"
@@ -40,7 +34,7 @@ const Contact = () => {
               GitHub <MdArrowOutward />
             </a>
             <a
-              href="https://www.linkedin.com/in/akashrmalhotra/"
+              href="https://www.linkedin.com/in/muhammad-muzammil-irshad-05b863333/"
               target="_blank"
               rel="noreferrer"
               data-cursor="disable"
@@ -49,7 +43,16 @@ const Contact = () => {
               LinkedIn <MdArrowOutward />
             </a>
             <a
-              href="https://www.youtube.com/@Leftbraincoder"
+              href="https://huggingface.co/mmuzammilirshad/spaces"
+              target="_blank"
+              rel="noreferrer"
+              data-cursor="disable"
+              className="contact-social"
+            >
+              Hugging Face <MdArrowOutward />
+            </a>
+            <a
+              href="https://youtube.com/@autoaiacademy?si=d9ABTXFdhr4ee1eN"
               target="_blank"
               rel="noreferrer"
               data-cursor="disable"
@@ -58,22 +61,14 @@ const Contact = () => {
               YouTube <MdArrowOutward />
             </a>
             <a
-              href="https://www.instagram.com/leftbraincoder/"
+              href="https://wa.me/923292540897"
               target="_blank"
               rel="noreferrer"
               data-cursor="disable"
               className="contact-social"
             >
-              Instagram <MdArrowOutward />
+              WhatsApp <MdArrowOutward />
             </a>
-          </div>
-          <div className="contact-box">
-            <h2>
-              Designed and Developed <br /> by <span>Akash Malhotra</span>
-            </h2>
-            <h5>
-              <MdCopyright /> 2026
-            </h5>
           </div>
         </div>
       </div>
